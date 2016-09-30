@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 const moment = require('moment');
 import Month from "./Month";
+import MonthHeader from "./MonthHeader";
 
 export default class CalendarPicker extends Component {
 
@@ -14,6 +15,8 @@ export default class CalendarPicker extends Component {
 
         this.nextMonth = this.nextMonth.bind(this);
         this.prevMonth = this.prevMonth.bind(this);
+        this.setMonth = this.setMonth.bind(this);
+        this.setYear = this.setYear.bind(this);
     }
 
     componentWillReceiveProps(props) {
@@ -47,19 +50,41 @@ export default class CalendarPicker extends Component {
         });
     }
 
+    setMonth(month) {
+        this.setState({
+            month: parseInt(month)
+        });
+    }
+
+    setYear(year) {
+        this.setState({
+            year: parseInt(year)
+        });
+    }
+
     renderTitle() {
-        return <p>
+        return <div>
             <button onClick={this.prevMonth}>&laquo;</button>
-            {`${this.state.month + 1}.${this.state.year}`}
+            <MonthHeader
+                month={this.state.month}
+                year={this.state.year}
+                setMonth={this.setMonth}
+                setYear={this.setYear}
+            />
             <button onClick={this.nextMonth}>&raquo;</button>
-        </p>;
+        </div>;
     }
 
     render() {
         return this.props.isVisible ? (
             <div className="calendar-picker">
                 {this.renderTitle()}
-                <Month month={this.state.month} year={this.state.year} />
+                <Month
+                    month={this.state.month}
+                    year={this.state.year}
+                    setMonth={this.setMonth}
+                    setYear={this.setYear}
+                />
             </div>
         ) : null;
     }

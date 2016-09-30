@@ -73,13 +73,11 @@ export default class Month extends Component {
             weeks.get(lastWeekNumber)[6 - i] = missingDays.pop();
         }
 
-        //console.log("Weeks for", this.props.month, this.props.year, weeks);
-
         return weeks;
     }
 
     renderHeader() {
-        return ["Sn", "M", "T", "W", "Th", "F", "S"].map(day => <span className="day-name">{day}</span>);
+        return ["Sn", "M", "T", "W", "Th", "F", "S"].map((day, index) => <span className="day-name" key={index}>{day}</span>);
     }
 
     renderWeeks() {
