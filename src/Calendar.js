@@ -8,11 +8,12 @@ export default class Calendar extends Component {
         super(props);
 
         this.state = {
-            selectedDate: this.props.selectedDate ? moment(this.props.selectedDate).format("DD.MM.YYYY") : moment(),
+            selectedDay: this.props.selectedDay ? moment(this.props.selectedDay, "DD.MM.YYYY") : moment(),
             isVisible: false
         };
 
         this.toggleCalendar = this.toggleCalendar.bind(this);
+        this.selectDay = this.selectDay.bind(this);
 
     }
 
@@ -22,12 +23,19 @@ export default class Calendar extends Component {
         });
     }
 
+    selectDay(selectedDay) {
+        this.setState({
+            selectedDay
+        });
+    }
+
     render() {
-        return (
+        return this.state.selectedDay ? (
             <div className="calendar">
                 <input
                     type="text"
-                    defaultValue={this.state.selectedDate.format("DD.MM.YYYY")}
+                    readOnly
+                    value={this.state.selectedDay.format("DD.MM.YYYY")}
                 />
                 <button
                     type="button"
@@ -37,10 +45,11 @@ export default class Calendar extends Component {
                 </button>
                 <CalendarPicker
                     isVisible={this.state.isVisible}
-                    selectedDay={this.state.selectedDate}
+                    selectedDay={this.state.selectedDay}
+                    selectDay={this.selectDay}
                 />
             </div>
-        )
+        ) : null;
     }
 }
 

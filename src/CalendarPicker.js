@@ -84,6 +84,8 @@ export default class CalendarPicker extends Component {
                     year={this.state.year}
                     setMonth={this.setMonth}
                     setYear={this.setYear}
+                    selectedDay={this.props.selectedDay}
+                    selectDay={this.props.selectDay}
                 />
             </div>
         ) : null;

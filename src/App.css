@@ -13,6 +13,24 @@
 
 .day {
     font-weight: 400;
+    cursor: pointer;
+}
+
+.day.is-selected {
+    background: cornflowerblue;
+    color: #fff;
+    font-weight: bold;
+}
+
+.day.is-today {
+    background: #7fdbff;
+    color: #001f3f;
+}
+
+.dat.is-today.is-selected {
+    background: #7fdbff;
+    color: #001f3f;
+    font-weight: bold;
 }
 
 .week {

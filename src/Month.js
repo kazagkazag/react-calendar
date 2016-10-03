@@ -3,6 +3,16 @@ const moment = require('moment');
 
 export default class Month extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.selectDay = this.selectDay.bind(this);
+    }
+
+    selectDay(day) {
+        this.props.selectDay(day);
+    }
+
     getDaysForMonth(month, year) {
         const daysInMonth = moment({
             day: 1,
@@ -76,18 +86,33 @@ export default class Month extends Component {
         return weeks;
     }
 
+    getDayClassName(day) {
+        const isToday = day.isSame(moment(), "day") ? "is-today" : "";
+        const fromDifferentMonth = day.get("month") !== this.props.selectedDay.get("month") ? "from-different-month" : "";
+        const isSelected = day.isSame(this.props.selectedDay, "day") ? "is-selected" : "";
+        return `day ${isToday} ${fromDifferentMonth} ${isSelected}`;
+    }
+
     renderHeader() {
         return ["Sn", "M", "T", "W", "Th", "F", "S"].map((day, index) => <span className="day-name" key={index}>{day}</span>);
     }
 
     renderWeeks() {
         const weeks = this.completeWeeks(this.getWeeks(this.getDaysForMonth(this.props.month, this.props.year)));
-        const result = []
+        const result = [];
 
         weeks.forEach((days) => {
             result.push(<p className="week">
-                {Object.keys(days).map(dayNumber => {
-                    return <span className="day">{days[dayNumber].date()}</span>;
+                {Object.keys(days).map((dayNumber, index) => {
+                    return (
+                        <span
+                            key={index}
+                            className={this.getDayClassName(days[dayNumber])}
+                            onClick={(event, day) => this.selectDay(days[dayNumber])}
+                        >
+                            {days[dayNumber].date()}
+                        </span>
+                    )           ;
                 })}
             </p>);
         }, weeks);

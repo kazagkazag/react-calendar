@@ -4,6 +4,6 @@ import App from './App';
 import './index.css';
 
 ReactDOM.render(
-  <App />,
+  <App selectedDay="05.10.2016"/>,
   document.getElementById('root')
 );
