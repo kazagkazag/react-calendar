@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 const moment = require('moment');
+import MonthHeader from "./MonthHeader";
+import Week from "./Week";
 
 export default class Month extends Component {
 
@@ -86,35 +88,19 @@ export default class Month extends Component {
         return weeks;
     }
 
-    getDayClassName(day) {
-        const isToday = day.isSame(moment(), "day") ? "is-today" : "";
-        const fromDifferentMonth = day.get("month") !== this.props.selectedDay.get("month") ? "from-different-month" : "";
-        const isSelected = day.isSame(this.props.selectedDay, "day") ? "is-selected" : "";
-        return `day ${isToday} ${fromDifferentMonth} ${isSelected}`;
-    }
-
-    renderHeader() {
-        return ["Sn", "M", "T", "W", "Th", "F", "S"].map((day, index) => <span className="day-name" key={index}>{day}</span>);
-    }
-
     renderWeeks() {
         const weeks = this.completeWeeks(this.getWeeks(this.getDaysForMonth(this.props.month, this.props.year)));
         const result = [];
 
-        weeks.forEach((days) => {
-            result.push(<p className="week">
-                {Object.keys(days).map((dayNumber, index) => {
-                    return (
-                        <span
-                            key={index}
-                            className={this.getDayClassName(days[dayNumber])}
-                            onClick={(event, day) => this.selectDay(days[dayNumber])}
-                        >
-                            {days[dayNumber].date()}
-                        </span>
-                    )           ;
-                })}
-            </p>);
+        weeks.forEach((daysInWeek, index) => {
+            result.push(
+                <Week
+                    key={index}
+                    selectedDay={this.props.selectedDay}
+                    selectDay={this.selectDay}
+                    days={daysInWeek}
+                />
+            );
         }, weeks);
 
         return result;
@@ -123,7 +109,7 @@ export default class Month extends Component {
     render() {
         return this.props && this.props.month >=0 && this.props.year >=0 ? (
             <div className="month">
-                {this.renderHeader()}
+                <MonthHeader />
                 {this.renderWeeks()}
             </div>
         ) : null;

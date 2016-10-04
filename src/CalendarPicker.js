@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 const moment = require('moment');
 import Month from "./Month";
-import MonthHeader from "./MonthHeader";
+import MonthHeader from "./MonthPicker";
+import CalendarPickerHeader from "./CalendarPickerHeader";
 
 export default class CalendarPicker extends Component {
 
@@ -62,23 +63,17 @@ export default class CalendarPicker extends Component {
         });
     }
 
-    renderTitle() {
-        return <div>
-            <button onClick={this.prevMonth}>&laquo;</button>
-            <MonthHeader
-                month={this.state.month}
-                year={this.state.year}
-                setMonth={this.setMonth}
-                setYear={this.setYear}
-            />
-            <button onClick={this.nextMonth}>&raquo;</button>
-        </div>;
-    }
-
     render() {
         return this.props.isVisible ? (
             <div className="calendar-picker">
-                {this.renderTitle()}
+                <CalendarPickerHeader
+                    month={this.state.month}
+                    year={this.state.year}
+                    setMonth={this.setMonth}
+                    setYear={this.setYear}
+                    nextMonth={this.nextMonth}
+                    prevMonth={this.prevMonth}
+                />
                 <Month
                     month={this.state.month}
                     year={this.state.year}
