@@ -99,6 +99,8 @@ export default class Month extends Component {
                     selectedDay={this.props.selectedDay}
                     selectDay={this.selectDay}
                     days={daysInWeek}
+                    disableBefore={this.props.disableBefore}
+                    disableAfter={this.props.disableAfter}
                 />
             );
         }, weeks);

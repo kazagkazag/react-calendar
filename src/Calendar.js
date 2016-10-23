@@ -47,9 +47,15 @@ export default class Calendar extends Component {
                     isVisible={this.state.isVisible}
                     selectedDay={this.state.selectedDay}
                     selectDay={this.selectDay}
+                    numberOfMonths={this.props.numberOfMonths}
+                    disableBefore={this.props.disableBefore}
+                    disableAfter={this.props.disableAfter}
                 />
             </div>
         ) : null;
     }
 }
 
+Calendar.defaultProps = {
+    numberOfMonths: 1
+}

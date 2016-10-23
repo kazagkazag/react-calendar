@@ -33,9 +33,22 @@
     font-weight: bold;
 }
 
+.day.is-disabled {
+    background: black;
+    color: white;
+}
+
 .week {
     float: left;
     clear: both;
     margin: 0;
     padding: 0;
+}
+
+.month {
+    float: left;
+}
+
+.month + .month {
+    margin-left: 20px;
 }

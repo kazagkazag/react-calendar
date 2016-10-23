@@ -22,6 +22,8 @@ export default function Week (props) {
                         day={day}
                         className={getDayClassName(props.selectedDay, day)}
                         selectDay={props.selectDay}
+                        disableBefore={props.disableBefore}
+                        disableAfter={props.disableAfter}
                     />
                 );
             })}

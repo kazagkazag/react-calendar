@@ -3,6 +3,7 @@ const moment = require('moment');
 import Month from "./Month";
 import MonthHeader from "./MonthPicker";
 import CalendarPickerHeader from "./CalendarPickerHeader";
+import * as utils from "./utils";
 
 export default class CalendarPicker extends Component {
 
@@ -63,6 +64,36 @@ export default class CalendarPicker extends Component {
         });
     }
 
+    renderMonths() {
+        const months = parseInt(this.props.numberOfMonths);
+        let displayedMonthIndex = 0;
+        let month = this.state.month;
+        let year = this.state.year;
+        const renderedMonths = [];
+
+        for(; displayedMonthIndex < months; displayedMonthIndex ++) {
+            renderedMonths.push(
+                <Month
+                    month={month}
+                    year={year}
+                    setMonth={this.setMonth}
+                    setYear={this.setYear}
+                    selectedDay={this.props.selectedDay}
+                    selectDay={this.props.selectDay}
+                    disableBefore={this.props.disableBefore}
+                    disableAfter={this.props.disableAfter}
+                    key={month}
+                />
+            );
+
+            const nextMonthAndYearNumbers = utils.getNextMonthAndYearNumbers(month, year);
+            month = nextMonthAndYearNumbers.month;
+            year = nextMonthAndYearNumbers.year;
+        }
+
+        return renderedMonths;
+    }
+
     render() {
         return this.props.isVisible ? (
             <div className="calendar-picker">
@@ -74,14 +105,7 @@ export default class CalendarPicker extends Component {
                     nextMonth={this.nextMonth}
                     prevMonth={this.prevMonth}
                 />
-                <Month
-                    month={this.state.month}
-                    year={this.state.year}
-                    setMonth={this.setMonth}
-                    setYear={this.setYear}
-                    selectedDay={this.props.selectedDay}
-                    selectDay={this.props.selectDay}
-                />
+                {this.renderMonths()}
             </div>
         ) : null;
     }
